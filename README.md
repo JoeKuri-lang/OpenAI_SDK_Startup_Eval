@@ -66,18 +66,19 @@ Provides general bias detection across the orchestrator’s output.
 Agents Breakdown
 
 Evaluators
-	•	product_eval_agent — Assesses product quality, defensibility, and user fit.
-	•	market_eval_agent — Evaluates market timing, size, and competitive landscape.
-	•	team_eval_agent — Reviews the leadership team’s experience and execution.
+1. product_eval_agent — Assesses product quality, defensibility, and user fit.
+2. market_eval_agent — Evaluates market timing, size, and competitive landscape.
+3. team_eval_agent — Reviews the leadership team’s experience and execution.
+
 
 Improvement Analyzers
-	•	differentiation_analyzer_agent — Evaluates how unique the startup is.
-	•	vision_agent — Assesses the long-term vision and ambition.
-	•	scalability_agent — Examines whether the startup can grow efficiently.
+1. differentiation_analyzer_agent — Evaluates how unique the startup is.
+2. vision_agent — Assesses the long-term vision and ambition.
+3. scalability_agent — Examines whether the startup can grow efficiently.
 
 Other Agents
-	•	risk_finder_agent — Flags potential business risks (e.g., solo founder, no revenue model).
-	•	orchestrator_agent — Central coordinator with input/output guardrails.
+1. risk_finder_agent — Flags potential business risks (e.g., solo founder, no revenue model).
+2. orchestrator_agent — Central coordinator with input/output guardrails.
 
 ---------------------
 
