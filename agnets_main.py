@@ -38,6 +38,7 @@ from dotenv import load_dotenv
 from openai import OpenAI
 import asyncio
 from pydantic import BaseModel
+import gradio as gr
  
 
 
@@ -434,30 +435,34 @@ orchestrator_agent = Agent(
 ----------------------------------------------------Async Main Section----------------------------------------------------
 """
 
-async def main(): #Main async loop: handles user input, routes through orchestrator, applies guardrails
-    print("Welcome! Type exit or quit to end the conversation with the model!")
-    while True:
-        user_input = input("Please enter your startup's information. : ")
-        if user_input.strip().lower() == "exit" or user_input.strip().lower() == "quit":
-            print("Goodbye! Thank you for using the program!")
-            break
- 
-        try:
-            result = await Runner.run(orchestrator_agent, input=user_input)
-            risk_result = await Runner.run(risk_finder_agent, input=user_input)
-            print(
-                "Your input did not fail any guardrails."
-                "Here is general Feedback:", result.final_output,
-            )
-            print(
-                "Identified Risks:", risk_result.final_output
-            )
-        except OutputGuardrailTripwireTriggered:
-            print(
-                "Guardrail tripped - sensitive content detected. "
-                "Please remove any sensitive content before using the program again!"
-            )
- 
-   
+
+async def evaluate_startup_gradio(user_input: str):
+    try:
+        result = await Runner.run(orchestrator_agent, input=user_input)
+        risks = await Runner.run(risk_finder_agent, input=user_input)
+        return result.final_output, risks.final_output or "No major risks flagged."
+    except OutputGuardrailTripwireTriggered:
+        return "Guardrail tripped – sensitive content detected. Please revise your input.", "" 
+
+def launch_ui():
+    with gr.Blocks() as demo:
+        gr.Markdown("## Startup Evaluation Assistant")
+        gr.Markdown("Submit your startup idea below. Our platform will evaluate it and flag potential risks! Providing you with useful feedback on how to imporve it moving forward!")
+
+        user_input = gr.Textbox(label="Startup Information", lines=10, placeholder="Describe your startup...")
+        submit = gr.Button("Run Model")
+
+        feedback_output = gr.Textbox(label="General Feedback", lines=10)
+        risk_output = gr.Textbox(label="Critical Risk Factors", lines=5)
+
+        submit.click(
+            fn=evaluate_startup_gradio,
+            inputs=user_input,
+            outputs=[feedback_output, risk_output]
+        )
+
+    demo.queue()
+    demo.launch()
+
 if __name__ == "__main__":
-    asyncio.run(main())
+        launch_ui()
