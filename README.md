@@ -86,8 +86,6 @@ Usage
 
 Run the main program:
 
-python main.py
-
 You will be prompted to enter your startup idea. Example:
 
 A SaaS tool helping remote-first engineering teams monitor productivity using ethical AI without surveilling developers directly.
