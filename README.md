@@ -18,9 +18,6 @@ Setup Instructions
 
 1. Clone the Repository
 
-git clone https://github.com/your-username/startup-evaluator.git
-cd startup-evaluator
-
 2. Create and Activate Virtual Environment
 
 python -m venv venv
