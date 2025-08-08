@@ -43,7 +43,6 @@ import gradio as gr
 
 
 load_dotenv() # Load environment variables from .env file. This is needed so that the right API keys are loaded. Otherwise, you are not able to call the model/servce. 
- 
 client = OpenAI()
 
 
